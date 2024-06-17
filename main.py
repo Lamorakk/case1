@@ -228,25 +228,21 @@ async def confirm_video(callback_query: types.CallbackQuery, state: FSMContext):
     await callback_query.answer("🔄 Your balance has been updated!", show_alert=True)
 
 @dp.callback_query(F.data == "withdraw")
-async def process_withdraw(callback_query: types.CallbackQuery):
+async def process_withdraw(callback_query: types.CallbackQuery, state: FSMContext):
     user_id = callback_query.from_user.id
     cursor.execute("SELECT balance FROM contacts WHERE user_id = %s", (user_id,))
     balance = cursor.fetchone()[0]
-
 
     if balance >= 2:
         await state.set_state(Form.waiting_for_verification)
 
         link = "https://t.me/vasel_dovg"
-        keyboarder = ReplyKeyboardMarkup(
-            keyboard=[
-                [KeyboardButton(text="Verification", callback_query = link)],
-            ],
-            resize_keyboard=True
-        )
-        await callback_query.answer("🔒 Withdrawals are available only for verified users.", show_alert=True, reply_markup = keyboarder)
+        keyboarder = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="Verification", url=link)],
+        ])
+        await callback_query.message.answer("🔒 Withdrawals are available only for verified users.", reply_markup=keyboarder)
     else:
-        await callback_query.answer(f"🚀 Withdrawal is available when balance more then 20.00$, current: {balance}", show_alert=True)
+        await callback_query.answer(f"🚀 Withdrawal is available when balance more than 20.00$, current: {balance}", show_alert=True)
 
 async def main():
     await dp.start_polling(bot)
