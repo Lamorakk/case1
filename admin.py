@@ -13,7 +13,7 @@ API_TOKEN = '6878895871:AAH32aBrhA7RyIddgKBVTtbA3QVSstaNo7s'
 logging.basicConfig(level=logging.INFO)
 
 button1 = KeyboardButton(text='Get all contacts')
-button2 = KeyboardButton(text='Upload Videos')
+button2 = KeyboardButton(text='Upload videos')
 markup = ReplyKeyboardMarkup(
     keyboard=[
         [button1, button2]
@@ -77,7 +77,7 @@ async def get_all_contacts(message: types.Message):
     else:
         await message.answer("No contacts found in the database.")
 
-@dp.message(lambda message: message.text == 'Upload Videos')
+@dp.message(lambda message: message.text == 'Upload videos')
 async def upload_videos(message: types.Message, state: FSMContext):
     await state.set_state(Form.waiting_for_video_links)
     await message.answer("Please input the video links, each on a new line:")
