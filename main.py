@@ -183,7 +183,7 @@ async def channel(callback_query: types.CallbackQuery, state: FSMContext):
     )
 
     await bot.send_video(chat_id=callback_query.message.chat.id, video=FSInputFile(next_video_path))
-    await asyncio.sleep(5)
+    await asyncio.sleep(7)
     await state.update_data(current_video=next_video_id)
     await state.set_state(Form.waiting_for_confirmation)
     await callback_query.message.answer(
@@ -225,7 +225,7 @@ async def confirm_video(callback_query: types.CallbackQuery, state: FSMContext):
     else:
         await callback_query.message.answer("✔️ You've already earned money for watching this video.")
 
-    await callback_query.answer("🔄 Your balance has been updated!", show_alert=True)
+    # await callback_query.answer("🔄 Your balance has been updated!", show_alert=True)
 
 @dp.callback_query(F.data == "withdraw")
 async def process_withdraw(callback_query: types.CallbackQuery, state: FSMContext):
