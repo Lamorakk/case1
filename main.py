@@ -185,18 +185,9 @@ async def channel(callback_query: types.CallbackQuery, state: FSMContext):
     await bot.send_video(chat_id=callback_query.message.chat.id, video=FSInputFile(next_video_path))
     await asyncio.sleep(7)
     await state.update_data(current_video=next_video_id)
-    await state.set_state(Form.waiting_for_confirmation)
-    await callback_query.message.answer(
-        "✅ Press the button below to confirm you've watched the video and claim your earnings!",
-        reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="Confirm", callback_data="confirm_video")]
-        ])
-    )
+    await confirm_video(callback_query, state)
 
-@dp.callback_query(F.data == "confirm_video")
 async def confirm_video(callback_query: types.CallbackQuery, state: FSMContext):
-    await bot.delete_message(chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id)
-
     user_id = callback_query.from_user.id
     data = await state.get_data()
     current_video = data.get('current_video')
@@ -224,8 +215,6 @@ async def confirm_video(callback_query: types.CallbackQuery, state: FSMContext):
             await callback_query.message.answer("⚠️ An error occurred while processing your request. Please try again later.")
     else:
         await callback_query.message.answer("✔️ You've already earned money for watching this video.")
-
-    # await callback_query.answer("🔄 Your balance has been updated!", show_alert=True)
 
 @dp.callback_query(F.data == "withdraw")
 async def process_withdraw(callback_query: types.CallbackQuery, state: FSMContext):
