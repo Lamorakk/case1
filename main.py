@@ -39,10 +39,10 @@ storage = MemoryStorage()
 dp = Dispatcher(storage=storage)
 
 db_config = {
-    'user': 'root',
-    'password': 'root',
-    'host': '127.0.0.1',
-    'database': 'telegram_bot'
+    'user': 'videobot',
+    'password': 'nuxbu2-hudhyp-vymGuq',
+    'host': '77.37.49.219',
+    'database': 'videobotdb'
 }
 conn = MySQLdb.connect(**db_config)
 cursor = conn.cursor()
@@ -225,7 +225,7 @@ async def process_withdraw(callback_query: types.CallbackQuery, state: FSMContex
     if balance >= 20:
         await state.set_state(Form.waiting_for_verification)
 
-        link = "https://t.me/vasel_dovg"
+        link = "https://t.me/Cesar13216"
         keyboarder = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text="Verification", url=link)],
         ])

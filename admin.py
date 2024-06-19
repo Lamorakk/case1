@@ -30,12 +30,11 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
 db_config = {
-    'user': 'root',
-    'password': 'root',
-    'host': '127.0.0.1',
-    'database': 'telegram_bot'
+    'user': 'videobot',
+    'password': 'nuxbu2-hudhyp-vymGuq',
+    'host': '77.37.49.219',
+    'database': 'videobotdb'
 }
-
 async def admin():
     await dp.start_polling(bot)
 
