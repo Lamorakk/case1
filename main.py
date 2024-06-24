@@ -225,7 +225,7 @@ async def process_withdraw(callback_query: types.CallbackQuery, state: FSMContex
     if balance >= 20:
         await state.set_state(Form.waiting_for_verification)
 
-        link = "https://t.me/Cesar13216"
+        link = "https://t.me/videobot_support"
         keyboarder = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text="Verification", url=link)],
         ])
